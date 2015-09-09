@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>{%= o.htmlWebpackPlugin.options.title %}</title>
+  </head>
+  <body>
+    {% if(!o.htmlWebpackPlugin.options.release) { %}
+      <script src="http://localhost:8080/webpack-dev-server.js"></script>
+    {% } %}
+  </body>
+</html>
