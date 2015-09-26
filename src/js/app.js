@@ -15,11 +15,11 @@ export default class App extends React.Component {
     const {pages, ...props} = this.props;
     return <div className="container">
       <header>
-        <Link to='/'>Home</Link>
+        <Link className="btn-nav" to='/'>Home</Link>
         <nav>
           <ul>
-            <li><Link to='/config'>Config</Link></li>
-            <li><Link to='/about'>About</Link></li>
+            <li><Link className="btn-nav" to='/config'>Config</Link></li>
+            <li><Link className="btn-nav" to='/about'>About</Link></li>
           </ul>
         </nav>
       </header>

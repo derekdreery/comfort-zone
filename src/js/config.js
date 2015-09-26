@@ -61,7 +61,7 @@ export default class Config extends React.Component {
               event.stopPropagation();
             }}>
               {name_el}
-              <span className="icon-remove btn-edit"
+              <span className="icon-remove btn"
                 onClick={() => {
                   this.removeTargetArea(area_idx)
                 }} />
@@ -93,9 +93,9 @@ export default class Config extends React.Component {
                         area_idx, target_idx)
                     })}>
                     {name_el}
-                    <span>
-                      <span key="reset" className="icon-refresh btn-edit" />
-                      <span key="delete" className="icon-remove btn-edit"
+                    <span className="btn-row">
+                      <span key="reset" className="icon-refresh btn" />
+                      <span key="delete" className="icon-remove btn"
                             onClick={() => {
                               this.removeTarget(area_idx, target_idx);
                             }} />

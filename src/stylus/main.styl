@@ -10,9 +10,13 @@ $text-color = black
 *
   margin 0
   padding 0
-  font-size 12px
+  font-size inherit
   text-decoration none
   color $text-color
+
+body
+  font-family 'Open Sans', sans-serif
+  font-size 18px
 
 
 /* all links */
@@ -24,7 +28,8 @@ a:hover
 
 .paragraph
   margin 2em auto
-  width 80%
+  @media screen and (min-width: 600px)
+    width 80%
 
 button,
 span.button-style
@@ -38,10 +43,19 @@ button
 button:active
   background darken($button-bg-color, 5%)
 
-.btn-edit
+.btn
   cursor pointer
   padding-left 0.3em
-  font-size 1.3em
+  font-size 1.5em
+
+.btn-row
+  display flex
+
+  *:not(:last-child)
+    margin-right 0.4em
+
+
+
 
 html,
 body
@@ -57,6 +71,8 @@ body
     background-color $header-bg-color
     display flex
     justify-content space-between
+    .btn-nav
+        font-size 1.5em
     nav > ul > li:not(:last-child)
       margin-right 1.5em
     ul
@@ -69,8 +85,9 @@ body
     flex 1
     display flex
     justify-content center
+    flex-wrap wrap
     .svg-container
-      flex 2
+      flex 2 1 40em
       display flex
       justify-content center
       .zone-container
@@ -91,7 +108,7 @@ body
         .segment.no-selected
           fill hsl(0, 50%, 90%)
     .detail-container
-      flex 1
+      flex 1 1 20em
       background-color darken($header-bg-color, 10)
       padding 2em
       .title
@@ -99,7 +116,8 @@ body
           margin 0 1em
           color lighten($text-color, 40)
   section.config-container
-    width 70%
+    @media screen and (min-width: 900px)
+      width 70%
     margin 1em auto
     display flex
     flex-direction column
