@@ -31,6 +31,17 @@ export default class Config extends React.Component {
     getData().unregisterAreas(this.updateAreas);
   }
 
+  componentDidUpdate = (prevProps, prevState) => {
+    if(this.state.editing.type !== null &&
+      (this.state.editing.type !== prevState.editing.type ||
+        this.state.editing.idx !== prevState.editing.idx)
+    ) {
+      const dom = React.findDOMNode(this.refs.edit_input);
+      dom.focus();
+      dom.select();
+    }
+  }
+
   /**
    *
    */
@@ -41,14 +52,16 @@ export default class Config extends React.Component {
           const editing = this.state.editing;
 
           const name_el = editing.type === "area" && editing.idx === area_idx ?
-            <input value={area.name} onChange={(evt) => {
-              const value = evt.target.value;
-              this.setState((state) => {
-                area.name = value;
-              })
-            }} onClick={(evt) => {
-              evt.stopPropagation();
-            }}/> : <span onClick={(event) => {
+            <input value={area.name}
+              ref="edit_input"
+              onChange={(evt) => {
+                const value = evt.target.value;
+                this.setState((state) => {
+                  area.name = value;
+                })
+              }} onClick={(evt) => {
+                evt.stopPropagation();
+              }}/> : <span onClick={(event) => {
                 this.setEditing("area", area_idx);
               }}>
                 {area.name}
@@ -72,14 +85,16 @@ export default class Config extends React.Component {
 
                   const name_el =
                     this.isEditing("target", area_idx, target_idx) ?
-                    <input value={target.name} onChange={(evt) => {
-                      const value = evt.target.value;
-                      this.setState((state) => {
-                        target.name = value;
-                      })
-                    }} onClick={(evt) => {
-                      evt.stopPropagation();
-                    }}/> :
+                    <input value={target.name}
+                      ref="edit_input"
+                      onChange={(evt) => {
+                        const value = evt.target.value;
+                        this.setState((state) => {
+                          target.name = value;
+                        })
+                      }} onClick={(evt) => {
+                        evt.stopPropagation();
+                      }}/> :
                     <span key="name" onClick={(event) => {
                       event.stopPropagation();
                       this.setEditing("target", area_idx, target_idx)
