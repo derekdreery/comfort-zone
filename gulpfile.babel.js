@@ -2,8 +2,10 @@ import gulp from 'gulp';
 import gutil from "gulp-util";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
-import webpackConfig from "./webpack.config.js";
+import webpackConfigFactory from "./webpack.config.js";
 
+const prod = gutil.env.production;
+const webpackConfig = webpackConfigFactory(!prod);
 const paths = {
   js: {
     src: 'src/js',
@@ -55,4 +57,5 @@ gulp.task("webpack-dev-server", function(callback) {
   });
 });
 
-gulp.task('default', ['webpack-dev-server'], () => {});
+const task = prod ? 'webpack' : 'webpack-dev-server';
+gulp.task('default', [task], () => {});
