@@ -5,6 +5,8 @@ import webpack from 'webpack';
 export default function config(debug) {
   // booleanify
   debug = debug === true;
+  const babel_loader =
+    'babel-loader?cacheDirectory=true&stage=0&optional[]=runtime';
   let config = {
     entry: ["./src/js/main.js"],
     output: {
@@ -36,8 +38,7 @@ export default function config(debug) {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         loaders: debug ?
-          ['react-hot', 'babel-loader?cacheDirectory&stage=0'] :
-          ['babel-loader?cacheDirectory&stage=0']
+          ['react-hot', babel_loader] : [babel_loader]
       }]
     }
   };
