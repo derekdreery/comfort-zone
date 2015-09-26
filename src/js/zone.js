@@ -1,46 +1,63 @@
 import React from 'react';
+import {Router} from 'react-router';
 
-import {Vect} from './lib/number';
+import {Vect, getInts} from './lib/number';
+import {getData} from './lib/data';
 import TargetArea from './target-area';
+import Detail from './detail';
+import NoMatch from './no-match';
 
 export default class Zone extends React.Component {
-  static defaultProps = {
-    target_areas: [{
-      name: "example",
-      targets: [{
-        name: "r1",
-        achieved: true
-      }]
-    }, {
-      name: "example 2",
-      targets: [{
-        name: "r21",
-        achieved: true
-      }, {
-        name: "r22",
-        achieved: false
-      }]
-    }, {
-      name: 'tanksy',
-      targets: [{
-        name: "love me",
-        achieved: true
-      }, {
-        name: "get thin",
-        achieved: true
-      }, {
-        name: "get self confidence",
-        achieved: false
-      }]
-    }]
+
+  _areas_callback = (areas) => {
+    this.setState({
+      target_areas: areas
+    });
   }
 
+  _reset_selected = () => {
+    window.location.hash = `#/`;
+  }
+
+  state = {
+    target_areas: []
+  }
+
+  static defaultProps = {
+    selected: null,
+    onSelect: (evt, area_idx, idx) => {
+      evt.stopPropagation();
+      window.location.hash = `#/detail/${area_idx}/${idx}`;
+    }
+  }
+
+  static propTypes = {
+    selected: React.PropTypes.array,
+    onSelect: React.PropTypes.func
+  }
+
+  /**
+   * Register event listeners and make sure the display is square
+   */
   componentDidMount() {
     this.makeSquare();
+    getData().registerAreas(this._areas_callback);
+    window.addEventListener('click', this._reset_selected, false);
   }
 
+  /**
+   * Re-square after browser resize
+   */
   componentDidUpdate() {
     this.makeSquare();
+  }
+
+  /**
+   * Unregister event listeners
+   */
+  componentWillUnmount() {
+    window.removeEventListener('click', this._reset_selected, false);
+    getData().unregisterAreas(this._areas_callback);
   }
 
   /**
@@ -48,29 +65,54 @@ export default class Zone extends React.Component {
    */
   render() {
     //console.log("Render: "+new Date());
-    const RADIUS = 0.45;
-    const target_areas = this.props.target_areas;
+    const PI2 = 2 * Math.PI;
+    const target_areas = this.state.target_areas;
     const target_areas_count = target_areas.length;
-    const target_area_angle = 2 * Math.PI * (1 / target_areas.length);
-    const {children, ...props} = this.props;
+    const target_area_angle = PI2 / target_areas_count;
 
+    let {target_idx, area_idx} = getInts(this.props.params);
+
+    const {children, onSelect, params, ...props} = this.props;
+    let detail = null;
+    if(target_idx !== undefined) {
+      const area = target_areas[area_idx];
+      if(!area) {
+        return <NoMatch />;
+      }
+      const target = area.targets[target_idx];
+      if(!target) {
+        return <NoMatch />;
+      }
+      detail = <Detail area={area} target_idx={target_idx} target={target}/>
+    }
     return (<section className="main-container">
-        {this.props.children}
+      <div className="svg-container">
         <svg version="1.1"
              ref="svg"
              baseProfile="full"
              className="zone-container"
              xmlns="http://www.w3.org/2000/svg">
           <g ref="main_group">
-            {target_areas.map(function(target_area, area_idx) {
-              return <TargetArea key={area_idx}
-                                 data={target_area}
-                                 position={area_idx}
-                                 angle={target_area_angle}
-                                 total={target_areas_count} />
+            {target_areas.map((target_area, idx) => {
+              return <TargetArea key={idx}
+                data={target_area}
+                position={idx}
+                angle={target_area_angle}
+                total={target_areas_count}
+                onSelect={onSelect}
+                selected={
+                  target_idx !== undefined ? (
+                    area_idx === idx ?
+                      target_idx : false
+                  ) : null
+                }
+              />
             })}
           </g>
         </svg>
+      </div>
+      {detail}
+      {children}
     </section>);
   }
 
@@ -83,10 +125,14 @@ export default class Zone extends React.Component {
    */
   makeSquare() {
     const dom = React.findDOMNode(this.refs.svg);
+    // bail if we are on 404
+    if(!dom) {
+      return;
+    }
     const sectionDom = dom.parentNode;
     const containerDom = sectionDom.parentNode;
     const height = sectionDom.getBoundingClientRect().height;
-    const width = containerDom.getBoundingClientRect().width;
+    const width = sectionDom.getBoundingClientRect().width;
     const size = Math.min(width, height);
     dom.setAttribute('height', size);
     dom.setAttribute('width', size);

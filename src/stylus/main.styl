@@ -1,15 +1,47 @@
+$button-bg-color = hsl(0, 50%, 90%)
+$header-bg-color = hsl(70, 10%, 85%)
+$link-color = hsl(0, 0%, 40%)
+$tile-bg-color = hsl(60, 30%, 85%)
+$tile-margin = 0.3em
+$tile-border-radius = 0.2em
+$text-color = black
+
 /* quick normalize */
 *
   margin 0
   padding 0
+  font-size 12px
   text-decoration none
-  color black
+  color $text-color
+
 
 /* all links */
 a
-  color hsl(0, 0%, 40%)
+  color $link-color
 a:hover
-  color hsl(0, 0%, 30%)
+  color darken($link-color, 10%)
+
+
+.paragraph
+  margin 2em auto
+  width 80%
+
+button,
+span.button-style
+  border none
+  padding 0.5em
+  margin $tile-margin
+  border-radius $tile-border-radius
+
+button
+  background $button-bg-color
+button:active
+  background darken($button-bg-color, 5%)
+
+.btn-edit
+  cursor pointer
+  padding-left 0.3em
+  font-size 1.3em
 
 html,
 body
@@ -22,7 +54,7 @@ body
   flex-direction column
   header
     padding 1.5em 0.8em
-    background-color hsl(70, 10%, 85%)
+    background-color $header-bg-color
     display flex
     justify-content space-between
     nav > ul > li:not(:last-child)
@@ -33,25 +65,71 @@ body
       padding 0
       li
         list-style-type none
-  .main-container
+  section.main-container
     flex 1
     display flex
     justify-content center
-    .zone-container
-      stroke-width 0.005
-      stroke #333
-      text
-        text-anchor middle
-        stroke-width 0
-        font-size 0.03pt
-      .segment
-        fill hsl(0, 50%, 70%)
-        stroke white
-        stroke-width 0.03
-        stroke-linejoin bevel
-      .segment.achieved
-        fill hsl(120, 50%, 70%)
-
-.paragraph
-  margin 2em auto
-  width 80%
+    .svg-container
+      flex 2
+      display flex
+      justify-content center
+      .zone-container
+        stroke-width 0.005
+        stroke #333
+        text
+          //text-anchor middle
+          //stroke-width 0
+          //font-size 0.03pt
+        .segment
+          fill hsl(0, 50%, 70%)
+          stroke white
+          stroke-width 0.03
+          stroke-linejoin bevel
+          cursor pointer
+        .segment.achieved
+          fill hsl(120, 50%, 70%)
+        .segment.no-selected
+          fill hsl(0, 50%, 90%)
+    .detail-container
+      flex 1
+      background-color darken($header-bg-color, 10)
+      padding 2em
+      .title
+        span.spacer
+          margin 0 1em
+          color lighten($text-color, 40)
+  section.config-container
+    width 70%
+    margin 1em auto
+    display flex
+    flex-direction column
+    div.area-config
+      display flex
+      flex-wrap wrap
+      align-items stretch
+      input
+        flex 1 1 15em
+      .area-config-name
+        flex 1 1 15em
+        display flex
+        align-items center
+        justify-content space-between
+        background-color $header-bg-color
+        border-radius $tile-border-radius
+        margin $tile-margin
+        padding 0.3em 1em
+      .area-config-targets
+        flex 3 1 30em
+        display flex
+        flex-direction column
+        .current-targets
+          background-color $header-bg-color
+          border-radius $tile-border-radius
+          margin $tile-margin
+          .target
+            padding 0.3em 1em
+            display flex
+            align-items center
+            justify-content space-between
+          .target:hover
+            background-color darken($header-bg-color, 10)
