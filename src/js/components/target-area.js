@@ -56,9 +56,7 @@ export default class TargetArea extends React.Component {
                        area_position={position}
                        area_total={total}
                        selected={sel}
-                       onSelect={(evt) => {
-                         onSelect(evt, target_idx);
-                       }}
+                       onSelect={onSelect}
                        total={targets_count} />
       })}
       <text>

@@ -5,12 +5,12 @@ import {} from './lib/polyfill';
 import {} from '../assets/css/font-awesome.css';
 import {} from '../stylus/main.styl';
 
-import App from './app';
-import Zone from './zone';
-import Detail from './detail';
-import About from './about';
-import Config from './config';
-import NoMatch from './no-match';
+import App from './components/app';
+import Zone from './components/zone';
+import Detail from './components/detail';
+import About from './components/about';
+import Config from './components/config';
+import NoMatch from './components/no-match';
 
 import {getData} from './lib/data';
 import {fastDebounce} from './lib/util';

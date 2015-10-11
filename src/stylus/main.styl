@@ -2,7 +2,7 @@ $button-bg-color = hsl(0, 50%, 90%)
 $header-bg-color = hsl(70, 10%, 85%)
 $link-color = hsl(0, 0%, 40%)
 $tile-bg-color = hsl(60, 30%, 85%)
-$tile-margin = 0.3em
+$tile-margin = 0.6em 0.3em 0
 $tile-border-radius = 0.2em
 $text-color = black
 
@@ -13,11 +13,13 @@ $text-color = black
   font-size inherit
   text-decoration none
   color $text-color
+  outline none
+  border none
+  font-family 'Open Sans', sans-serif
 
 body
   font-family 'Open Sans', sans-serif
-  font-size 20px
-
+  font-size 15px
 
 /* all links */
 a
@@ -28,8 +30,7 @@ a:hover
 
 .paragraph
   margin 2em auto
-  @media screen and (min-width: 600px)
-    width 80%
+  width 80%
 
 button,
 span.button-style
@@ -45,16 +46,20 @@ button:active
 
 .btn
   cursor pointer
-  padding-left 0.3em
   font-size 1.5em
 
 .btn-row
   display flex
+  justify-content center
+  align-items center
+  .btn
+    padding 0.2em 0.4em
 
-  *:not(:last-child)
-    margin-right 0.4em
+$header-button =
+  padding: 0.6em 0.6em
 
-
+.stretch
+  flex 1
 
 
 html,
@@ -67,20 +72,15 @@ body
   height 100%
   flex-direction column
   header
-    padding 1.5em 0.8em
-    background-color $header-bg-color
-    display flex
-    justify-content space-between
-    .btn-nav
-        font-size 1.5em
-    nav > ul > li:not(:last-child)
-      margin-right 1.5em
-    ul
+    nav
+      background-color $header-bg-color
       display flex
-      margin 0
-      padding 0
-      li
-        list-style-type none
+      justify-content space-between
+      .btn-nav
+        font-size 1.5em
+        {$header-button}
+      .btn-nav.active
+        background-color darken($header-bg-color, 10%)
   section.main-container
     flex 1
     display flex
@@ -116,8 +116,9 @@ body
           margin 0 1em
           color lighten($text-color, 40)
   section.config-container
-    @media screen and (min-width: 900px)
-      width 70%
+    width 100%
+    @media screen and (min-width: 500px)
+      width 80%
     margin 1em auto
     display flex
     flex-direction column
@@ -125,29 +126,30 @@ body
       display flex
       flex-wrap wrap
       align-items stretch
-      input
-        flex 1 1 15em
-      .area-config-name
+      .config-row
         flex 1 1 15em
         display flex
-        align-items center
-        justify-content space-between
+        align-items stretch
         background-color $header-bg-color
         border-radius $tile-border-radius
         margin $tile-margin
-        padding 0.3em 1em
+        .static-text
+          display flex
+          flex-direction column
+          justify-content center
+          padding-left 1em
+          flex 1
+        .static-text.title
+          font-weight bold
+        .static-text:hover /* for PC only */
+          background-color darken($header-bg-color, 10)
+        .input
+          border-top-left-radius $tile-border-radius
+          border-bottom-left-radius $tile-border-radius
+          border 1px solid $header-bg-color
+          padding-left 1em
+          flex 1
       .area-config-targets
         flex 3 1 30em
         display flex
         flex-direction column
-        .current-targets
-          background-color $header-bg-color
-          border-radius $tile-border-radius
-          margin $tile-margin
-          .target
-            padding 0.3em 1em
-            display flex
-            align-items center
-            justify-content space-between
-          .target:hover
-            background-color darken($header-bg-color, 10)

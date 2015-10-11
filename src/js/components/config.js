@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import {getData} from './lib/data';
+import {getData} from '../lib/data';
 
 export default class Config extends React.Component {
 
@@ -52,7 +52,7 @@ export default class Config extends React.Component {
           const editing = this.state.editing;
 
           const name_el = editing.type === "area" && editing.idx === area_idx ?
-            <input value={area.name}
+            <input value={area.name} className="input"
               ref="edit_input"
               onChange={(evt) => {
                 const value = evt.target.value;
@@ -61,23 +61,29 @@ export default class Config extends React.Component {
                 })
               }} onClick={(evt) => {
                 evt.stopPropagation();
-              }}/> : <span onClick={(event) => {
+              }} onKeyPress={(evt) => {
+                if(evt.keyCode === 0) { // Enter
+                  this.setEditing();
+                }
+              }}
+            /> : <span className="static-text title" onClick={(event) => {
                 this.setEditing("area", area_idx);
+                event.stopPropagation();
               }}>
                 {area.name}
-              </span>;
+            </span>;
 
           return (<div key={area_idx} className="area-config">
-            <div className="area-config-name" onClick={(event) => {
-              // highlight this rown
-              this.setHighlighted('area', area_idx);
-              event.stopPropagation();
-            }}>
+            <div className="config-row">
               {name_el}
-              <span className="icon-remove btn"
-                onClick={() => {
-                  this.removeTargetArea(area_idx)
-                }} />
+              <span className="btn-row">
+                <span className="icon-remove btn"
+                  onClick={() => {
+                    if(window.confirm(`Really delete whole area "${area.name}"?`)) {
+                      this.removeTargetArea(area_idx);
+                    }
+                  }} />
+              </span>
             </div>
             <div className="area-config-targets">
               <div className="current-targets">
@@ -86,6 +92,7 @@ export default class Config extends React.Component {
                   const name_el =
                     this.isEditing("target", area_idx, target_idx) ?
                     <input value={target.name}
+                      className="input"
                       ref="edit_input"
                       onChange={(evt) => {
                         const value = evt.target.value;
@@ -95,18 +102,14 @@ export default class Config extends React.Component {
                       }} onClick={(evt) => {
                         evt.stopPropagation();
                       }}/> :
-                    <span key="name" onClick={(event) => {
+                    <span key="name" className="static-text" onClick={(event) => {
                       event.stopPropagation();
                       this.setEditing("target", area_idx, target_idx)
                     }}>
                       {target.name}
                     </span>;
 
-                  return (<div key={target_idx} className={cx({
-                      target: true,
-                      highlighted: this.isHighlighted("target",
-                        area_idx, target_idx)
-                    })}>
+                  return (<div key={target_idx} className="config-row">
                     {name_el}
                     <span className="btn-row">
                       <span key="reset" className="icon-refresh btn" />
@@ -173,13 +176,21 @@ export default class Config extends React.Component {
   }
 
   setEditing = (type, area_idx, target_idx) => {
-    this.setHighlighted(type, area_idx, target_idx);
-    this.setState({
-      editing: {
-        type: type,
-        idx: target_idx === undefined ? area_idx : [area_idx, target_idx]
-      }
-    })
+    if(type === null || type === undefined || type === false) {
+      this.setState({
+        editing: {
+          type: null,
+          idx: null
+        } 
+      });
+    } else {
+      this.setState({
+        editing: {
+          type: type,
+          idx: target_idx === undefined ? area_idx : [area_idx, target_idx]
+        }
+      });
+    }
   }
 
   /**

@@ -1,13 +1,21 @@
 <!doctype html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title>{%= o.htmlWebpackPlugin.options.title %}</title>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
-    {% if(!o.htmlWebpackPlugin.options.release) { %}
-      <script src="http://localhost:8080/webpack-dev-server.js"></script>
-    {% } %}
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport"
+              content="width=device-width,
+              initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{%= o.htmlWebpackPlugin.options.title %}</title>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic'
+              rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        {% if(!o.htmlWebpackPlugin.options.release) { %}
+        <script src="http://localhost:8080/webpack-dev-server.js"></script>
+        {% } %}
+    </body>
 </html>

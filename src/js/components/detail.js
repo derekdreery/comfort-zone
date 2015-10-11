@@ -1,6 +1,6 @@
 import React from 'react';
 import Zone from './zone';
-import Data from './lib/data';
+import Data from '../lib/data';
 
 export default class Detail extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Router} from 'react-router';
 
-import {Vect, getInts} from './lib/number';
-import {getData} from './lib/data';
+import {Vect, getInts} from '../lib/number';
+import {getData} from '../lib/data';
 import TargetArea from './target-area';
 import Detail from './detail';
 import NoMatch from './no-match';
@@ -25,9 +25,23 @@ export default class Zone extends React.Component {
 
   static defaultProps = {
     selected: null,
+    /**
+     * TODO this should use something in router so it works with
+     * HTML5 as well as hash
+     */
     onSelect: (evt, area_idx, idx) => {
       evt.stopPropagation();
-      window.location.hash = `#/detail/${area_idx}/${idx}`;
+      const newloc = `#/detail/${area_idx}/${idx}`;
+      const home = `#/`;
+      const hash = window.location.hash.substring(
+        0,
+        window.location.hash.indexOf('?')
+      );
+      if(hash === newloc) {
+        window.location.hash = home;
+      } else {
+        window.location.hash = newloc;
+      }
     }
   }
 

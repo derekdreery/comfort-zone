@@ -59,8 +59,7 @@ export default class Target extends React.Component {
     const lightness = not_selected ? 80 : 70; // lighter when not selected
     return <path
       onClick={(event) => {
-        onSelect(event);
-        window.location.hash = `#/detail/${area_position}/${position}`
+        onSelect(event, area_position, position);
       }}
       style={{
         fill: `hsl(${hue},${saturation}%,${lightness}%)`
