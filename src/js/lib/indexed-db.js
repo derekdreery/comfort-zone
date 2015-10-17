@@ -1,3 +1,9 @@
+var indexedDB = window.indexedDB || window.mozIndexedDB ||
+  window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+// If we are using polyfill for indexedDB
+if(window.shimIndexedDB) {
+  window.shimIndexedDB.__useShim();
+}
 
 const DEFAULT_ERR_MSG = "Your browser doesn't support persistent storage.";
 // TODO add support for createIndex in different version change to table
@@ -125,10 +131,10 @@ class IndexedDB {
   constructor(builder, resolve, reject) {
     const me = this;
     var oldVersion;
-    if(!window.indexedDB) {
+    if(!indexedDB) {
       reject(new DOMError(DEFAULT_ERR_MSG));
     }
-    const request = window.indexedDB.open(builder.dbName, builder.version);
+    const request = indexedDB.open(builder.dbName, builder.version);
     request.onerror = (event) => {
       reject(new DOMError(`Unhandled database error during creation: `+
         `${event.target.errorCode} - maybe you didn't give me permission`));

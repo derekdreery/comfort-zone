@@ -1,11 +1,4 @@
-$button-bg-color = hsl(0, 50%, 90%)
-$header-bg-color = hsl(70, 10%, 85%)
-$link-color = hsl(0, 0%, 40%)
-$tile-bg-color = hsl(60, 30%, 85%)
-$tile-margin = 0.6em 0.3em 0
-$tile-border-radius = 0.2em
-$text-color = black
-
+@import "constants"
 /* quick normalize */
 *
   margin 0
@@ -36,8 +29,6 @@ button,
 span.button-style
   border none
   padding 0.5em
-  margin $tile-margin
-  border-radius $tile-border-radius
 
 button
   background $button-bg-color
@@ -77,7 +68,7 @@ body
       display flex
       justify-content space-between
       .btn-nav
-        font-size 1.5em
+        font-size 1.3em
         {$header-button}
       .btn-nav.active
         background-color darken($header-bg-color, 10%)
@@ -126,13 +117,17 @@ body
       display flex
       flex-wrap wrap
       align-items stretch
+      margin-top 1em
+      margin-bottom -($small-margin)
+      margin-right -($small-margin)
+      .config-row, .btn-add-target
+        margin-bottom $small-margin
+        margin-right $small-margin
       .config-row
         flex 1 1 15em
         display flex
         align-items stretch
         background-color $header-bg-color
-        border-radius $tile-border-radius
-        margin $tile-margin
         .static-text
           display flex
           flex-direction column
@@ -153,3 +148,15 @@ body
         flex 3 1 30em
         display flex
         flex-direction column
+        .btn-add-target
+          flex 1
+    .btn-group
+      margin-top 1em
+      display flex
+      flex-wrap wrap
+      margin-right -($small-margin)
+      margin-bottom -($small-margin)
+      .btn-add-area
+        flex 1 0 20em
+        margin-right $small-margin
+        margin-bottom $small-margin
