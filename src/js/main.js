@@ -1,33 +1,45 @@
-import React from 'react';
-import {Router, Route, IndexRoute} from 'react-router';
+import ReactDOM from 'react-dom';
+import {configureStore} from './configureStore';
+import {Provider} from 'react-redux';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import {syncHistory} from 'redux-simple-router';
 
-import {} from './lib/polyfill';
-import {} from '../assets/css/font-awesome.css';
-import {} from '../stylus/main.styl';
+import './lib/polyfill';
+import '../assets/css/font-awesome.css';
+import '../stylus/main.styl';
 
-import App from './components/app';
-import Zone from './components/zone';
-import Detail from './components/detail';
-import About from './components/about';
-import Config from './components/config';
-import NoMatch from './components/no-match';
+import {App, Zone, About, Config, NoMatch} from './components/app';
 
-import {getData} from './lib/data';
 import {fastDebounce} from './lib/util';
 
+const reduxRouterMiddleware = syncHistory(browserHistory);
+
+const store = configureStore(reduxRouterMiddleware);
+
+reduxRouterMiddleware.listenForReplays(store);
+
+/**
+ * Primary application renderer
+ * @returns {undefined}
+ */
 function render() {
-  React.render((<Router>
-    <Route path="/" component={App}>
-      <IndexRoute component={Zone} />
-      <Route path="detail/:area_idx/:target_idx" component={Zone} />
-      <Route path="config" component={Config}/>
-      <Route path="about" component={About}/>
-      <Route path="*" component={NoMatch}/>
-    </Route>
-  </Router>), document.body);
+    ReactDOM.render(
+        <Provider store={store}>
+            <Router history={browserHistory}>
+                <Route path="/" component={App}>
+                    <IndexRoute component={Zone} />
+                    <Route path="detail/:area_idx/:target_idx" component={Zone} />
+                    <Route path="config" component={Config}/>
+                    <Route path="about" component={About}/>
+                    <Route path="*" component={NoMatch}/>
+                </Route>
+            </Router>
+        </Provider>,
+        document.getElementById('mount')
+    );
 }
 render();
 
 window.addEventListener('resize', () => {
-  fastDebounce(render);
+    fastDebounce(render);
 }, true);

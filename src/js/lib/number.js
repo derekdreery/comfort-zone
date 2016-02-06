@@ -1,8 +1,7 @@
+import invariant from 'invariant';
 
 export function clamp(input, min=0, max=1) {
-  if(!(min < max)) {
-    throw new TypeError("min must be less than max")
-  }
+  invariant(min <= max, `min (${min}) must be less than max (${max})`);
   return input < min ? min : (input > max ? max : input);
 }
 

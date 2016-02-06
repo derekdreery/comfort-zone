@@ -1,8 +1,8 @@
-import gulp from 'gulp';
-import gutil from "gulp-util";
-import webpack from "webpack";
-import WebpackDevServer from "webpack-dev-server";
-import webpackConfigFactory from "./webpack.config.js";
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackConfigFactory = require('./webpack.config.js');
 
 const prod = gutil.env.production;
 const webpackConfig = webpackConfigFactory(!prod);
@@ -13,29 +13,29 @@ const paths = {
   }
 };
 
-gulp.task("webpack", function(callback) {
+gulp.task('webpack', function(callback) {
   // run webpack
   webpack(webpackConfig, function(err, stats) {
-    if (err) throw new gutil.PluginError("webpack", err);
-    gutil.log("[webpack]", stats.toString({
+    if (err) throw new gutil.PluginError('webpack', err);
+    gutil.log('[webpack]', stats.toString({
       // output options
     }));
     callback();
   });
 });
 
-gulp.task("webpack-dev-server", function(callback) {
+gulp.task('webpack-dev-server', function(callback) {
   // Start a webpack-dev-server
   var compiler = webpack(webpackConfig, function(err, stats) {
     if(err) {
-      throw new gutil.PluginError("webpack", err);
+      throw new gutil.PluginError('webpack', err);
     }
-    gutil.log("[webpack]", stats.toString());
+    gutil.log('[webpack]', stats.toString());
   });
 
   new WebpackDevServer(compiler, {
     // server and middleware options
-    contentBase: __dirname + "/dist",
+    contentBase: __dirname + '/dist',
     hot: true,
     quiet: false,
     stats: {
@@ -47,10 +47,10 @@ gulp.task("webpack-dev-server", function(callback) {
       chunks: false,
       chunkModules: false
     }
-  }).listen(8080, "0.0.0.0", function(err) {
-    if (err) throw new gutil.PluginError("webpack-dev-server", err);
+  }).listen(8080, '0.0.0.0', function(err) {
+    if (err) throw new gutil.PluginError('webpack-dev-server', err);
     // Server listening
-    gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
+    gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
 
     // keep the server alive or continue?
     // callback();

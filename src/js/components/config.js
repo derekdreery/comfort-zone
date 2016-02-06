@@ -40,7 +40,7 @@ export default class Config extends React.Component {
       dom.focus();
       dom.select();
     }
-  }
+  };
 
   /**
    *
@@ -153,13 +153,13 @@ export default class Config extends React.Component {
       });
       return state;
     });
-  }
+  };
 
   removeTargetArea = (area_idx) => {
     this.setState((state) => {
       state.target_areas.splice(area_idx, 1);
     });
-  }
+  };
 
   addTarget = (area_idx) => {
     this.setState((state) => {
@@ -169,13 +169,13 @@ export default class Config extends React.Component {
         accomplished: false
       })
     })
-  }
+  };
 
   removeTarget = (area_idx, target_idx) => {
     this.setState((state) => {
       state.target_areas[area_idx].targets.splice(target_idx, 1);
     })
-  }
+  };
 
   setEditing = (type, area_idx, target_idx) => {
     if(type === null || type === undefined || type === false) {
@@ -193,7 +193,7 @@ export default class Config extends React.Component {
         }
       });
     }
-  }
+  };
 
   /**
    *
@@ -205,7 +205,7 @@ export default class Config extends React.Component {
         idx: null
       }
     });
-  }
+  };
 
   /*
    *
@@ -224,7 +224,7 @@ export default class Config extends React.Component {
         idx: target_idx === undefined ? area_idx : [area_idx, target_idx]
       }
     })
-  }
+  };
 
   /**
    *
@@ -236,7 +236,7 @@ export default class Config extends React.Component {
         idx: null
       }
     });
-  }
+  };
 
   /*
    *
@@ -253,12 +253,11 @@ export default class Config extends React.Component {
    */
   saveTargetAreas = () => {
     getData().setAreas(this.state.target_areas);
-  }
+  };
 
   updateAreas = (areas) => {
       this.setState({
-        target_areas: areas
+          target_areas: areas
       });
-    }
-
+  };
 }

@@ -12,8 +12,8 @@ const DEFAULT_ERR_MSG = "Your browser doesn't support persistent storage.";
  * This class implements a promise interface to IndexedDB.
  */
 export default class IndexedDBBuilder {
-  constructor() {
-    this.dbName = null;
+  constructor(dbName) {
+    this.dbName = dbName;
     this.version = 1;
     this.tables = {};
     this.dbError = (event) => {

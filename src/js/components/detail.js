@@ -22,6 +22,8 @@ export default class Detail extends React.Component {
     Data.getData().addAction(area.name, target_idx).catch((err) => {
       if(err.name === "ConstraintError") {
         alert("You have already done this exposure today");
+      } else {
+          throw err;
       }
     });
   }
