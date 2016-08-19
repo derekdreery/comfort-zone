@@ -1,9 +1,10 @@
 import React from 'react';
-import {Router, Route, IndexRoute} from 'react-router';
+import ReactDOM from 'react-dom';
+import {hashHistory, Router, Route, IndexRoute} from 'react-router';
 
-import {} from './lib/polyfill';
-import {} from '../assets/css/font-awesome.css';
-import {} from '../stylus/main.styl';
+import './lib/polyfill';
+import '../assets/css/font-awesome.css';
+import '../stylus/main.styl';
 
 import App from './components/app';
 import Zone from './components/zone';
@@ -16,7 +17,7 @@ import {getData} from './lib/data';
 import {fastDebounce} from './lib/util';
 
 function render() {
-  React.render((<Router>
+  ReactDOM.render((<Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Zone} />
       <Route path="detail/:area_idx/:target_idx" component={Zone} />
@@ -24,7 +25,7 @@ function render() {
       <Route path="about" component={About}/>
       <Route path="*" component={NoMatch}/>
     </Route>
-  </Router>), document.body);
+  </Router>), document.getElementById('mount'));
 }
 render();
 

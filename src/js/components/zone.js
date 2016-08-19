@@ -138,7 +138,7 @@ export default class Zone extends React.Component {
    * TODO this is a target for optimization
    */
   makeSquare() {
-    const dom = React.findDOMNode(this.refs.svg);
+    const dom = this.refs.svg;
     // bail if we are on 404
     if(!dom) {
       return;
@@ -150,7 +150,7 @@ export default class Zone extends React.Component {
     const size = Math.min(width, height);
     dom.setAttribute('height', size);
     dom.setAttribute('width', size);
-    let g = React.findDOMNode(this.refs.main_group);
+    let g = this.refs.main_group;
     g.setAttribute('transform', 'scale('+size+') translate(0.5, 0.5) '+
     'scale(0.45)');
   }

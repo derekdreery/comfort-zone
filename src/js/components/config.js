@@ -36,7 +36,7 @@ export default class Config extends React.Component {
       (this.state.editing.type !== prevState.editing.type ||
         this.state.editing.idx !== prevState.editing.idx)
     ) {
-      const dom = React.findDOMNode(this.refs.edit_input);
+      const dom = this.refs.edit_input;
       dom.focus();
       dom.select();
     }
@@ -181,7 +181,7 @@ export default class Config extends React.Component {
         editing: {
           type: null,
           idx: null
-        } 
+        }
       });
     } else {
       this.setState({

@@ -1,6 +1,6 @@
 import React from 'react';
 import Zone from './zone';
-import Data from '../lib/data';
+import {getData} from '../lib/data';
 
 export default class Detail extends React.Component {
 
@@ -19,7 +19,7 @@ export default class Detail extends React.Component {
 
   recordAction = () => {
     const {area, target_idx} = this.props;
-    Data.getData().addAction(area.name, target_idx).catch((err) => {
+    getData().addAction(area.name, target_idx).catch((err) => {
       if(err.name === "ConstraintError") {
         alert("You have already done this exposure today");
       }
@@ -27,12 +27,12 @@ export default class Detail extends React.Component {
   }
 
   componentDidMount() {
-    Data.getData().registerActions(this.getActions, this.props.area.name,
+    getData().registerActions(this.getActions, this.props.area.name,
       this.props.target_idx);
   }
 
   componentWillUnmount() {
-    Data.getData().unregisterActions(this.getActions);
+    getData().unregisterActions(this.getActions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +43,7 @@ export default class Detail extends React.Component {
       this.setState({
         actions: []
       });
-      const data = Data.getData();
+      const data = getData();
       data.unregisterActions(this.getActions);
       data.registerActions(this.getActions, nextProps.area.name,
       nextProps.target_idx);

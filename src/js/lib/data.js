@@ -186,8 +186,6 @@ class Data {
 
 const data = new Data();
 
-export default {
-  getData: () => {
+export function getData() {
     return data;
-  }
-};
+}
