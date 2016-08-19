@@ -112,7 +112,7 @@ export default class Config extends React.Component {
                   return (<div key={target_idx} className="config-row">
                     {name_el}
                     <span className="btn-row">
-                      <span key="reset" className="icon-refresh btn" />
+                      <span key="reset" className="icon-cog btn" />
                       <span key="delete" className="icon-remove btn"
                             onClick={() => {
                               this.removeTarget(area_idx, target_idx);
@@ -129,14 +129,16 @@ export default class Config extends React.Component {
           </div>);
         })}
       </div>
-      <button className="btn-add-area"
-              onClick={this.addTargetArea.bind(this)}>
-        Add new Target Area
-      </button>
-      <button className="btn-add-area"
-              onClick={this.saveTargetAreas}>
-        Save
-      </button>
+      <div className="btn-group">
+        <button className="btn-add-area"
+                onClick={this.addTargetArea.bind(this)}>
+          Add new Target Area
+        </button>
+        <button className="btn-add-area"
+                onClick={this.saveTargetAreas}>
+          Save
+        </button>
+      </div>
     </section>);
   }
 

@@ -1,0 +1,21 @@
+// Base color for scheme
+$base-color = hsl(70, 10%, 50%)
+$text-color = black
+
+// Derrived colors
+$bg-color = lighten($base-color, 75%)
+
+$comp-color = complement($base-color)
+$comp-bg-color = lighten($comp-color, 75%)
+
+$header-bg-color = $bg-color
+$title-bg-color = $bg-color
+$button-bg-color = darken($comp-bg-color, 5%)
+$link-color = $base-color
+$small-margin-color = darken($base-color, 50%)
+
+// None-color
+$border-radius = 0.2em
+$tile-margin = 0.6em 0.3em 0
+
+$small-margin = 1px
